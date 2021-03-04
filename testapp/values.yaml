@@ -1,0 +1,9 @@
+deploy:
+  replicas: 3
+  image:
+    repository: paulczar/gb-frontend:v5
+
+deploy:
+  replicas: 1
+  image:
+     repository: mongo
