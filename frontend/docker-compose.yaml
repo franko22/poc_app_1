@@ -1,0 +1,34 @@
+version: '3.3'
+
+services:
+
+  db:      
+    image: mongo
+    container_name: mongo:4.2     
+    volumes:
+      - db_data:/var/lib/mongodb     
+    restart: always 
+    environment:
+      MYSQL_ROOT_PASSWORD: guest@press
+      MYSQL_DATABASE: guest
+      MYSQL_USER: word
+      MYSQL_PASSWORD: abc@123
+
+  guestbook: 
+    depends_on:
+      - db
+    image: paulczar/gb-frontend:v5
+    container_name: guestbook      
+    volumes:
+      - frontend_files:/var/www/html 
+    ports:
+      - "8000:80"     
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: word
+      WORDPRESS_DB_PASSWORD: abc@123
+
+volumes:
+    guestbook_files:
+    db_data:
